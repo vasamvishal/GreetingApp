@@ -19,6 +19,15 @@ class Controller {
                 res.status(200).send(data);
         })
     }
+
+    getByIdAllDetails(req, res) {
+        service.getByIdAllDetails(req, (err, data) => {
+            if (err)
+                res.status(422).send(err);
+            else
+                res.status(200).send(data);
+        })
+    }
 }
 
 module.exports = new Controller();

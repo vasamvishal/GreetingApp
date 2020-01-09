@@ -20,7 +20,7 @@ class greetingModel {
         const greeting = new Greetings({
             firstName: body.firstName,
             lastName: body.lastName,
-            message:`Welcome,${body.firstName} ${body.lastName}`
+            message: `Welcome,${body.firstName} ${body.lastName}`
         })
         greeting.save((err, data) => {
             if (err) {
@@ -40,6 +40,20 @@ class greetingModel {
                 console.log(data);
                 callback(null, data);
             }
+        })
+    }
+
+    getDetailsById(req, callback) {
+        console.log(req);
+        Greetings.findById(req, (err, data) => {
+            if (err) {
+                console.log(err);
+                callback(err)
+            } else {
+                console.log(data.message);
+                callback(null, data.message);
+            }
+
         })
     }
 }
