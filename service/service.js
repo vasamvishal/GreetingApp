@@ -1,18 +1,27 @@
-var model=require('../model/greetingModel');
+var model = require('../model/greetingModel');
+
 class Service {
     registerGreeting(body, callback) {
-        try {
-            model.register(body, (err, data) => {
-                if (err) {
-                    callback(err)
-                } else {
-                    console.log("service", data);
-                    callback(null, data)
-                }
-            })
-        } catch (err) {
-            console.log("err at register service", err)
-        }
+        model.register(body, (err, data) => {
+            if (err) {
+                callback(err)
+            } else {
+                console.log("service", data);
+                callback(null, data)
+            }
+        });
+    }
+
+    getAllRegisteredGreetingDetails(body, callback) {
+        model.getDetails(body, (err, data) => {
+            if (err) {
+                callback(err)
+            } else {
+                console.log("service", data);
+                callback(null, data)
+            }
+        })
     }
 }
-module.exports=new Service();
+
+module.exports = new Service();
