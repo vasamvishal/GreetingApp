@@ -6,7 +6,6 @@ class Service {
             if (err) {
                 callback(err)
             } else {
-                console.log("service", data);
                 callback(null, data)
             }
         });
@@ -17,7 +16,6 @@ class Service {
             if (err) {
                 callback(err)
             } else {
-                console.log("service", data);
                 callback(null, data)
             }
         })
@@ -29,7 +27,25 @@ class Service {
             if (err) {
                 callback(err)
             } else {
-                console.log("service", data);
+                callback(null, data)
+            }
+        })
+    }
+    updateGreetings(req,callback){
+        model.updateGreetings(req, (err, data) => {
+            if (err) {
+                callback(err)
+            } else {
+                callback(null, data)
+            }
+        })
+    }
+    getDeleteById(req,callback){
+        let query=req.params.Id;
+        model.deleteDetailsById(query, (err, data) => {
+            if (err) {
+                callback(err)
+            } else {
                 callback(null, data)
             }
         })

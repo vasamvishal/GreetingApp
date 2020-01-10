@@ -26,7 +26,6 @@ class greetingModel {
             if (err) {
                 callback(err)
             } else {
-                console.log(data);
                 callback(null, data);
             }
         })
@@ -37,21 +36,40 @@ class greetingModel {
             if (err) {
                 callback(err)
             } else {
-                console.log(data);
                 callback(null, data);
             }
         })
     }
 
     getDetailsById(req, callback) {
-        console.log(req);
         Greetings.findById(req, (err, data) => {
             if (err) {
-                console.log(err);
                 callback(err)
             } else {
-                console.log(data.message);
                 callback(null, data.message);
+            }
+
+        })
+    }
+    updateGreetings(req,callback){
+        Greetings.findByIdAndUpdate(req.params.Id, {
+            firstName:req.body.firstName,
+            lastName:req.body.lastName,
+            message:`Welcome,${req.body.firstName} ${req.body.lastName}`},(err,data)=>{
+            if (err) {
+                callback(err)
+            } else {
+                console.log(data);
+                callback(null, data.message);
+            }
+        })
+    }
+    deleteDetailsById(req,callback){
+        Greetings.findByIdAndRemove(req, (err, data) => {
+            if (err) {
+                callback(err)
+            } else {
+                callback(null, data);
             }
 
         })

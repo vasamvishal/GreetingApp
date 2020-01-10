@@ -6,13 +6,12 @@ var logger = require('morgan');
 const route=require('../greetingapp/routes/routes')
 const config = require('./config/databaseConfig');
 
-// var indexRouter = require('./routes/index');
-// var usersRouter = require('./routes/users');
 const mongoose = require('mongoose');
 const connectDB = async () => {
   try {
     await mongoose.connect(config.url, {
-      useNewUrlParser: true
+      useNewUrlParser: true,
+      useUnifiedTopology:true
     });
     console.log('MongoDB Connected...');
   } catch (err) {
@@ -21,7 +20,7 @@ const connectDB = async () => {
   }
 };
 connectDB();
-
+mongoose.set('useFindAndModify', false);
 var app = express();
 
 // view engine setup
