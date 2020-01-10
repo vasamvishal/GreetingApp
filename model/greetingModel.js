@@ -17,11 +17,8 @@ const Greetings = mongoose.model('greetings', greetingSchema);
 
 class greetingModel {
     register(body, callback) {
-        const greeting = new Greetings({
-            firstName: body.firstName,
-            lastName: body.lastName,
-            message: `Welcome,${body.firstName} ${body.lastName}`
-        })
+        console.log(body);
+        const greeting = new Greetings(body)
         greeting.save((err, data) => {
             if (err) {
                 callback(err)
@@ -41,30 +38,34 @@ class greetingModel {
         })
     }
 
-    getDetailsById(req, callback) {
-        Greetings.findById(req, (err, data) => {
-            if (err) {
-                callback(err)
-            } else {
-                callback(null, data.message);
-            }
+    getDetailsById(req) {
+        return new Promise(function (resolve, reject) {
+            Greetings.findById(req)
+                .then((data) => {
+                    console.log("result at model", data);
+                    resolve(data);
+                }).catch((err) => {
+                console.log("err at model", err);
+                reject(err);
+            })
+        })
+    }
 
-        })
-    }
-    updateGreetings(req,callback){
-        Greetings.findByIdAndUpdate(req.params.Id, {
-            firstName:req.body.firstName,
-            lastName:req.body.lastName,
-            message:`Welcome,${req.body.firstName} ${req.body.lastName}`},(err,data)=>{
+    updateGreetings(req, callback) {
+        Greetings.findByIdAndUpdate(req.params, {
+            firstName: req.firstName,
+            lastName: req.lastName,
+            message: req.message
+        }, (err, data) => {
             if (err) {
                 callback(err)
             } else {
-                console.log(data);
                 callback(null, data.message);
             }
         })
     }
-    deleteDetailsById(req,callback){
+
+    deleteDetailsById(req, callback) {
         Greetings.findByIdAndRemove(req, (err, data) => {
             if (err) {
                 callback(err)

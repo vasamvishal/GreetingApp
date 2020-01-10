@@ -34,19 +34,19 @@ class Controller {
     }
 
     getByIdAllDetails(req, res) {
-        service.getByIdAllDetails(req, (err, result) => {
-            if (err){
-                responseResult.sucess = false;
-                responseResult.message = "Validation Error";
-                responseResult.errors = err;
-                return res.status(422).send(responseResult);
-            } else {
-                responseResult.sucess = true;
-                responseResult.message = "got all messages by id";
-                responseResult.result = result;
-                return res.status(200).send(responseResult);
-            }
-        })
+        console.log(req);
+            service.getByIdAllDetails(req)
+                .then((data) => {
+                    responseResult.sucess = true;
+                    responseResult.message = "Recieved messages using id";
+                    responseResult.result = data;
+                    return res.status(200).send(responseResult);
+                }).catch((err) => {
+                    responseResult.sucess = false;
+                    responseResult.message = "Validation error";
+                    responseResult.errors = err;
+                    return res.status(422).send(responseResult);
+                })
     }
 
     updateGreetings(req, res) {
